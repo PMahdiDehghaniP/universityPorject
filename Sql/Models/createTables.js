@@ -20,11 +20,11 @@ const createLessonTable = `CREATE TABLE IF NOT EXISTS Lesson(
     id INT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     number_of_units TINYINT NOT NULL,
-    college_id SMALLINT NOT NULL)
+    college_id INT NOT NULL)
 `;
 const createTeacherTable = `CREATE TABLE IF NOT EXISTS Teacher (
     id INT PRIMARY KEY,name VARCHAR(255) NOT NULL,
-    lastname VARCHAR(255) NOT NULL, college_id SMALLINT NOT NULL
+    lastname VARCHAR(255) NOT NULL, college_id INT NOT NULL
 )`;
 
 const createCollegeTable = `CREATE TABLE IF NOT EXISTS College (
