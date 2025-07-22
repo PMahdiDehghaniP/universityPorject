@@ -11,24 +11,24 @@ const createStudentTable = `CREATE TABLE IF NOT EXISTS Student(
 )`;
 
 const createClassTable = `CREATE TABLE IF NOT EXISTS Class(
-    id SERIAL PRIMARY KEY,
+    id INT PRIMARY KEY,
     college_id INT NOT NULL,
     capacity TINYINT NOT NULL
 )`;
 
 const createLessonTable = `CREATE TABLE IF NOT EXISTS Lesson(
-    id SERIAL PRIMARY KEY,
+    id INT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     number_of_units TINYINT NOT NULL,
     college_id SMALLINT NOT NULL)
 `;
 const createTeacherTable = `CREATE TABLE IF NOT EXISTS Teacher (
-    id SERIAL PRIMARY KEY,name VARCHAR(255) NOT NULL,
+    id INT PRIMARY KEY,name VARCHAR(255) NOT NULL,
     lastname VARCHAR(255) NOT NULL, college_id SMALLINT NOT NULL
 )`;
 
 const createCollegeTable = `CREATE TABLE IF NOT EXISTS College (
-        id SERIAL PRIMARY KEY,
+    id INT PRIMARY KEY,
     number_of_classes TINYINT NOT NULL,
     number_of_floors TINYINT NOT NULL
 )`;
