@@ -1,5 +1,5 @@
 const mySql = require("mysql2/promise");
-const { createStudentTable } = require("../Sql/createTables");
+const ModelsTables = require("../Sql/createTables");
 
 const dbConnection = mySql.createPool({
   host: process.env.DATABASE_HOST || "localhost",
@@ -13,7 +13,9 @@ const dbConnection = mySql.createPool({
 
 const connectToDatabase = async () => {
   try {
-    await dbConnection.query(createStudentTable);
+    ModelsTables.forEach(async (table) => {
+      await dbConnection.query(table);
+    });
     console.log("Tables Created SuccessFully ✅");
   } catch (error) {
     console.log(`❌ Can not connect to database error is  : ${error}`);
