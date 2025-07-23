@@ -3,6 +3,7 @@ const PROTO_FILES_DIR = path.join(__dirname, "../proto");
 const StudentServiceHandlers = require("../resolvers/StudentService");
 const CollegeServiceHandlers = require("../resolvers/CollegeService");
 const ClassServiceHanlders = require("../resolvers/ClassService");
+const LessonServiceHanlders = require("../resolvers/LessonService");
 
 const GRPC_SERVICES = [
   {
@@ -22,6 +23,12 @@ const GRPC_SERVICES = [
     packageName: "Class",
     serviceName: "Class",
     handler: ClassServiceHanlders,
+  },
+  {
+    filePath: path.join(PROTO_FILES_DIR, "lesson.proto"),
+    packageName: "Lesson",
+    serviceName: "LessonService",
+    handler: LessonServiceHanlders,
   },
 ];
 
