@@ -3,8 +3,8 @@ const createStudentTable = `CREATE TABLE IF NOT EXISTS Student(
     firstname VARCHAR(40) NOT NULL,
     lastname VARCHAR(40) NOT NULL,
     age TINYINT NOT NULL,
-    phonenumber VARCHAR(16) NOT NULL,
-    code_meli INT NOT NULL,
+    phonenumber VARCHAR(16) NOT NULL UNIQUE,
+    code_meli INT NOT NULL UNIQUE,
     college_id CHAR(36) NOT NULL,
     gpa TINYINT NOT NULL,
     PRIMARY KEY(id)
@@ -18,7 +18,7 @@ const createClassTable = `CREATE TABLE IF NOT EXISTS Class(
 
 const createLessonTable = `CREATE TABLE IF NOT EXISTS Lesson(
     id CHAR(36) PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL UNIQUE,
     number_of_units TINYINT NOT NULL,
     college_id CHAR(36) NOT NULL)
 `;
@@ -31,7 +31,7 @@ const createTeacherTable = `CREATE TABLE IF NOT EXISTS Teacher (
 
 const createCollegeTable = `CREATE TABLE IF NOT EXISTS College (
     id CHAR(36) PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL UNIQUE,
     number_of_classes TINYINT NOT NULL,
     number_of_floors TINYINT NOT NULL
 )`;

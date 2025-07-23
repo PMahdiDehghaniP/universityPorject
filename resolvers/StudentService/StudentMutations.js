@@ -5,34 +5,34 @@ const { v4: uuid } = require("uuid");
 const AddNewStudent = async (call, callback) => {
   try {
     const {
-      Firstname,
-      Lastname,
+      First_name,
+      Last_name,
       Age,
-      Phonenumber,
+      Phone_number,
       Code_meli,
       College_id,
       Gpa,
     } = call.request;
-    const studentId = uuid();
+    const student_id = uuid();
     await dbConnection.query(
-      `INSERT IN TO Student(id,firstname,lastname,age,phonenumber,code_meli,college_id,gpa) VALUES(?,?,?,?,?,?,?,?)`,
+      `INSERT INTO Student(id,firstname,lastname,age,phonenumber,code_meli,college_id,gpa) VALUES(?,?,?,?,?,?,?,?)`,
       [
-        studentId,
-        Firstname,
-        Lastname,
+        student_id,
+        First_name,
+        Last_name,
         Age,
-        Phonenumber,
+        Phone_number,
         Code_meli,
         College_id,
         Gpa,
       ]
     );
     return callback(null, {
+      Student_id: student_id,
       Message: "Student SuccessFully Added!",
-      Student_id: studentId,
     });
   } catch (error) {
-    callback({ code: grpc.status.INTERNAL, error: error });
+    callback({ code: grpc.status.INTERNAL, message: error });
   }
 };
 
