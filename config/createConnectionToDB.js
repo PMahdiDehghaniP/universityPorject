@@ -60,6 +60,7 @@ const connectToDatabase = async () => {
     console.log("DataBase connected successfully");
   } catch (error) {
     console.log(`❌ Can not connect to database error is  : ${error}`);
+    process.exit(0);
   }
 };
 module.exports = { dbConnection, connectToDatabase };

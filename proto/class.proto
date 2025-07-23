@@ -1,0 +1,17 @@
+syntax="proto3";
+
+package Class;
+
+service Class {
+    rpc AddNewClass(AddNewClassRequest) returns (AddNewClassResponse);
+}
+
+message AddNewClassRequest {
+    int Capacity=1;
+    int College_id=2;
+}
+
+message AddNewClassResponse{
+int Class_id=1;
+string Message=2;
+}
