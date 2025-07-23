@@ -2,7 +2,10 @@ const mySql = require("mysql2/promise");
 const ModelsTables = require("../Sql/Models/createTables");
 const joinTables = require("../Sql/Join Tables/JoinTables");
 const foreignKeyNames = require("../Sql/constants/foreignKeys");
-const foreignKeySetterPorvider = require("../Sql/functions/foreignKeySetter");
+const {
+  doesForeignKeyExist,
+  foreignKeySetterPorvider,
+} = require("../Sql/functions/foreignKeySetter");
 
 const dbConnection = mySql.createPool({
   host: process.env.DATABASE_HOST || "localhost",
@@ -23,6 +26,7 @@ const connectToDatabase = async () => {
     for (const table of joinTables) {
       await dbConnection.query(table);
     }
+    console.log("Tables Are Ready ✅");
 
     for (const foreignKey of foreignKeyNames) {
       const {
@@ -32,15 +36,25 @@ const connectToDatabase = async () => {
         referenceTable,
         referenceColumn,
       } = foreignKey;
-      await dbConnection.query(
-        foreignKeySetterPorvider(
+
+      const exists = await doesForeignKeyExist(
+        dbConnection,
+        tableName,
+        constraintName
+      );
+      if (!exists) {
+        const sql = foreignKeySetterPorvider(
           tableName,
           constraintName,
           foreignKeyName,
           referenceTable,
           referenceColumn
-        )
-      );
+        );
+        await dbConnection.query(sql);
+        console.log(`✅ FK ${constraintName} added`);
+      } else {
+        console.log(`ℹ️ FK ${constraintName} already exists, skipping`);
+      }
     }
 
     console.log("DataBase connected successfully");

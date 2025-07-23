@@ -3,7 +3,7 @@ const preLesson_LessonTable = ` CREATE TABLE IF NOT EXISTS preLesson_Lesson(
     prerequisite_id INT NOT NULL
 )`;
 const lessonInTermTable = `CREATE TABLE IF  NOT EXISTS Lesson_in_term(
-    lesson_term_id CHAR(36) NOT NULL PRIMARY KEY,
+    id CHAR(36) NOT NULL PRIMARY KEY,
     term_id CHAR(36) NOT NULL,
     lesson_id INT NOT NULL,
     teacher_id INT NOT NULL,
