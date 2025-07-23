@@ -7,11 +7,11 @@ service Class {
 }
 
 message AddNewClassRequest {
-    int Capacity=1;
-    int College_id=2;
+    int32 Capacity=1;
+    string College_id=2;
 }
 
 message AddNewClassResponse{
-int Class_id=1;
-string Message=2;
+    string Message=1;
+    string Class_id=2;
 }
