@@ -1,0 +1,88 @@
+const foreignKeyNames = [
+  {
+    tableName: "Student",
+    constraintName: "student_college_id_foreign",
+    foreignKeyName: "college_id",
+    referenceTable: "College",
+    referenceColumn: "id",
+  },
+  {
+    tableName: "Lesson",
+    constraintName: "lesson_college_id_foreign",
+    foreignKeyName: "college_id",
+    referenceTable: "College",
+    referenceColumn: "id",
+  },
+  {
+    tableName: "prelesson_Lesson",
+    constraintName: "prerequisite_id_foreign",
+    foreignKeyName: "prerequisite_id",
+    referenceTable: "lesson",
+    referenceColumn: "id",
+  },
+  {
+    tableName: "prelesson_Lesson",
+    constraintName: "lesson_id_foreign",
+    foreignKeyName: "lesson_id",
+    referenceTable: "lesson",
+    referenceColumn: "id",
+  },
+  {
+    tableName: "Lesson_in_term",
+    constraintName: "lesson_in_term_term_id_foreign",
+    foreignKeyName: "term_id",
+    referenceTable: "Term",
+    referenceColumn: "id",
+  },
+  {
+    tableName: "Lesson_in_term",
+    constraintName: "lesson_in_term_lesson_id_foreign",
+    foreignKeyName: "lesson_id",
+    referenceTable: "Lesson",
+    referenceColumn: "id",
+  },
+  {
+    tableName: "Lesson_in_term",
+    constraintName: "lesson_in_term_teacher_id_foreign",
+    foreignKeyName: "teacher_id",
+    referenceTable: "Teacher",
+    referenceColumn: "id",
+  },
+  {
+    tableName: "Lesson_in_term",
+    constraintName: "lesson_in_term_college_id_foreign",
+    foreignKeyName: "college_id",
+    referenceTable: "College",
+    referenceColumn: "id",
+  },
+  {
+    tableName: "Lesson_in_term",
+    constraintName: "lesson_in_term_class_id_foreign",
+    foreignKeyName: "class_id",
+    referenceTable: "Class",
+    referenceColumn: "id",
+  },
+  {
+    tableName: "lesson_Term_Students",
+    constraintName: "lts_lesson_term_id_foreign",
+    foreignKeyName: "lesson_term_id",
+    referenceTable: "lesson_in_term",
+    referenceColumn: "id",
+  },
+  {
+    tableName: "lesson_Term_Students",
+    constraintName: "lesson_term_students_student_id_foreign",
+    foreignKeyName: "student_id",
+    referenceTable: "student",
+    referenceColumn: "id",
+  },
+  {
+    tableName: "Class",
+    constraintName: "class_college_id_foreign",
+    foreignKeyName: "college_id",
+    referenceTable: "Lesson_in_term",
+    referenceColumn: "class_id",
+  },
+];
+
+module.exports = foreignKeyNames;
