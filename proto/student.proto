@@ -3,20 +3,20 @@ syntax="proto3";
 package Student;
 
 service Student {
-    rpc AddNewStudent(AddNewStudentRequest) returns (AddNewStudentResponse);
+rpc AddNewStudent(AddNewStudentRequest) returns (AddNewStudentResponse);
 }
 
 message AddNewStudentRequest {
-string Firstname=1;
-string Lastname=12;
-int Age=3;
-string Phonenumber=4;
-int Code_meli=5;
-int College_id=6;
-int Gpa=7;
+    string Firstname=1;
+    string Lastname=12;
+    int32 Age=3;
+    string Phonenumber=4;
+    int64 Code_meli=5;
+    int32 College_id=6;
+    int32 Gpa=7;
 }
 
 message AddNewStudentResponse {
     string Message=1;
-    int Student_id=2;
+    int64 Student_id=2;
 }
