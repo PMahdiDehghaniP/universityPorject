@@ -82,6 +82,28 @@ const AddNewLessonInTerm = async (call, callback) => {
         message: "Teacher not found in the specified college",
       });
     }
+    const timeRegex = /^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/;
+
+    if (!timeRegex.test(Lesson_time)) {
+      return callback({
+        code: grpc.status.INVALID_ARGUMENT,
+        message: "Lesson_time must be in the format HH:MM:SS (e.g., 14:30:00)",
+      });
+    }
+    const [classLessonTimesResult] = await dbConnection.query(
+      `SELECT lesson_time AS lessonTime FROM
+      Lesson_in_term WHERE class_id=? AND term_id=?`,
+      [Class_id, Term_id]
+    );
+    if (
+      classLessonTimesResult.some((lesson) => lesson.lessonTime === Lesson_time)
+    ) {
+      return callback({
+        code: grpc.status.ALREADY_EXISTS,
+        message: "Another Lesson Exists In this Time",
+      });
+    }
+
     const [classCapacityResult] = await dbConnection.query(
       `SELECT capacity FROM Class WHERE id=?`,
       [Class_id]
