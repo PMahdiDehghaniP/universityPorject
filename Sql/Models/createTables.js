@@ -38,7 +38,7 @@ const createCollegeTable = `CREATE TABLE IF NOT EXISTS College (
 
 const createTermTable = `CREATE TABLE IF NOT EXISTS Term (
     id CHAR(36) NOT NULL PRIMARY KEY,
-    year DATE NOT NULL,
+    year VARCHAR(9) NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     season ENUM('spring', 'summer', 'autumn', 'winter') NOT NULL,

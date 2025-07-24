@@ -1,0 +1,31 @@
+syntax="proto3";
+
+package Term;
+
+import "google/protobuf/timestamp.proto";
+service TermService {
+    rpc AddNewTerm(AddNewTermRequest) returns  (AddNewTermResponse);
+}
+
+
+enum Seasons {
+    SPRING=0;
+    SUMMER=1;
+    AUTUMN=2;
+    WINTER=3;
+}
+enum TermStatus {
+    PASSED=0;
+    ACTIVE=1;
+}
+message AddNewTermRequest{
+  string Year=1;
+  google.protobuf.Timestamp Start_date=2;
+  google.protobuf.Timestamp End_date=3;
+  Seasons Season=4;
+  TermStatus Status=5;
+}
+message AddNewTermResponse{
+    string Term_id=1;
+    string Message=2;
+}
