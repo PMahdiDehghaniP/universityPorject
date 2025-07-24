@@ -1,0 +1,23 @@
+syntax="proto3";
+
+package Enrollment;
+
+service EnrollmentService {
+    rpc AddNewLessonInTerm(AddNewLessonInTermRequest)returns (AddNewLessonInTermResonse);
+
+}
+
+message AddNewLessonInTermRequest{
+    string Term_id=1;
+    string Lesson_id=2;
+    string Class_id=3;
+    string Teacher_id=4;
+    string College_id=5;
+    string Lesson_time=6;
+}
+
+message AddNewLessonInTermResonse{
+    string Lesson_in_term_id=1;
+    string Message =2;
+    string Start_time=3;
+}
