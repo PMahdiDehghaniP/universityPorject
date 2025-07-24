@@ -1,0 +1,18 @@
+syntax="proto3";
+
+package College;
+
+service CollegeService {
+    rpc AddNewCollege (AddNewCollegeRequest) returns (AddNewCollegeResponse);
+}
+
+message AddNewCollegeRequest{
+    string Name=1;
+    int32 Number_of_classes =2;
+    int32 Number_of_floors=3;
+}
+
+message AddNewCollegeResponse{
+    string Message=1;
+    string College_id=2;
+}

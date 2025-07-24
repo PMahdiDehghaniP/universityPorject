@@ -1,0 +1,18 @@
+syntax="proto3";
+
+package Lesson;
+
+service LessonService {
+rpc AddNewLesson (AddNewLessonRequest) returns (AddNewLessonResponse);
+}
+
+message AddNewLessonRequest{
+string Name=1;
+int32 Number_of_units=2;
+string College_id=3;
+}
+
+message AddNewLessonResponse{
+    string Lesson_id=1;
+    string Message=2;
+}

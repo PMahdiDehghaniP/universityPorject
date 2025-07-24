@@ -7,16 +7,16 @@ rpc AddNewStudent(AddNewStudentRequest) returns (AddNewStudentResponse);
 }
 
 message AddNewStudentRequest {
-    string Firstname=1;
-    string Lastname=12;
+    string First_name=1;
+    string Last_name=2;
     int32 Age=3;
-    string Phonenumber=4;
+    string Phone_number=4;
     int64 Code_meli=5;
-    int32 College_id=6;
+    string College_id=6;
     int32 Gpa=7;
 }
 
 message AddNewStudentResponse {
     string Message=1;
-    int64 Student_id=2;
+    string Student_id=2;
 }

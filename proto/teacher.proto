@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package Teacher;
+
+service TeacherService {
+    rpc AddNewTeacher (AddNewTeacherRequest) returns (AddNewTeacherResponse);
+}
+
+message AddNewTeacherRequest {
+    string Name=1;
+    string Lastname=2;
+    string College_id=3;
+}
+
+message AddNewTeacherResponse{
+    string Teacher_id=1;
+    string Message=2;
+}

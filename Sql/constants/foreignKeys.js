@@ -80,8 +80,8 @@ const foreignKeyNames = [
     tableName: "Class",
     constraintName: "class_college_id_foreign",
     foreignKeyName: "college_id",
-    referenceTable: "Lesson_in_term",
-    referenceColumn: "class_id",
+    referenceTable: "College",
+    referenceColumn: "id",
   },
 ];
 
