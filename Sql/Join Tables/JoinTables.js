@@ -15,7 +15,7 @@ const lessonInTermTable = `CREATE TABLE IF  NOT EXISTS Lesson_in_term(
 )`;
 
 const lessonTermStudentsTable = `CREATE TABLE IF NOT EXISTS Lesson_Term_Students(
-    lesson_term_id CHAR(36) NOT NULL PRIMARY KEY,
+    lesson_term_id CHAR(36) NOT NULL,
     student_id CHAR(36) NOT NULL,
     status ENUM('passed', 'failed', 'Deleted', 'notCompleted') NOT NULL,
     grade TINYINT NOT NULL

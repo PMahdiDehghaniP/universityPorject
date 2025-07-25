@@ -64,13 +64,6 @@ const foreignKeyNames = [
   },
   {
     tableName: "lesson_Term_Students",
-    constraintName: "lts_lesson_term_id_foreign",
-    foreignKeyName: "lesson_term_id",
-    referenceTable: "lesson_in_term",
-    referenceColumn: "id",
-  },
-  {
-    tableName: "lesson_Term_Students",
     constraintName: "lesson_term_students_student_id_foreign",
     foreignKeyName: "student_id",
     referenceTable: "student",
