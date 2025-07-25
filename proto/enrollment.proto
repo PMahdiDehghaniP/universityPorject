@@ -1,10 +1,10 @@
 syntax="proto3";
 
 package Enrollment;
-
+import "term.proto";
 service EnrollmentService {
     rpc AddNewLessonInTerm(AddNewLessonInTermRequest)returns (AddNewLessonInTermResonse);
-
+    rpc GetLessonsInTerm(GetLessonsInTermRequest) returns (GetLessonsInTermResponse);
 }
 
 message AddNewLessonInTermRequest{
@@ -20,4 +20,27 @@ message AddNewLessonInTermResonse{
     string Lesson_in_term_id=1;
     string Message =2;
     string Start_time=3;
+}
+message GetLessonsInTermRequest{
+    string College_id=1;
+    string Term_id=2;
+    string Class_id=3;
+    string Teacher_id=4;
+    string Lesson_id=5;
+}
+
+
+message GetLessonsInTermItem{
+    string College_name=1;
+    string Lesson_name=2;
+    int32 Tedad_vahed=3;
+    string Class_id=4;
+    string Lesson_time=5;
+    string Teacher_name=6;
+    string Teacher_lastname=7;
+    string Term_year=8;
+    Seasons termSeason=9;
+}
+message GetLessonsInTermResponse{
+repeated GetLessonsInTermItem lessons=1 ;
 }
