@@ -18,12 +18,12 @@ A simple and modular gRPC server built with Node.js and MySQL to manage universi
 ## 📁 Project Structure
 
 
-├── proto/ # .proto definitions for gRPC services
+├── proto
 │ ├── student.proto
 │ ├── lesson.proto
 │ ├── class.proto
 │ └── ...
-├── services/ # gRPC service implementations
+├── services
 │ ├── studentService.js
 │ ├── lessonService.js
 │ └── ...
@@ -38,7 +38,7 @@ A simple and modular gRPC server built with Node.js and MySQL to manage universi
 ## ⚙️ Installation
 
 # Clone the repository
-git clone [https://github.com/yourusername/university-grpc-server.git](https://github.com/PMahdiDehghaniP/universityPorject.git
+git clone https://github.com/PMahdiDehghaniP/universityPorject.git
 cd universityPorject
 
 # Install dependencies
