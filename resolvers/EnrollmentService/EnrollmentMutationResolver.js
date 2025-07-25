@@ -13,7 +13,12 @@ const AddNewLessonInTerm = async (call, callback) => {
       Lesson_time,
     } = call.request;
 
-    const isTermIdValid = await isDataExists("Term", "id", Term_id);
+    const isTermIdValid = await isDataExists(
+      dbConnection,
+      "Term",
+      "id",
+      Term_id
+    );
     if (!isTermIdValid) {
       return callback({
         code: grpc.status.NOT_FOUND,
@@ -21,7 +26,12 @@ const AddNewLessonInTerm = async (call, callback) => {
       });
     }
 
-    const isCollegeIdValid = await isDataExists("College", "id", College_id);
+    const isCollegeIdValid = await isDataExists(
+      dbConnection,
+      "College",
+      "id",
+      College_id
+    );
     if (!isCollegeIdValid) {
       return callback({
         code: grpc.status.NOT_FOUND,
@@ -29,7 +39,12 @@ const AddNewLessonInTerm = async (call, callback) => {
       });
     }
 
-    const isLessonIdValid = await isDataExists("Lesson", "id", Lesson_id);
+    const isLessonIdValid = await isDataExists(
+      dbConnection,
+      "Lesson",
+      "id",
+      Lesson_id
+    );
     if (!isLessonIdValid) {
       return callback({
         code: grpc.status.NOT_FOUND,
@@ -37,7 +52,12 @@ const AddNewLessonInTerm = async (call, callback) => {
       });
     }
 
-    const isClassIdValid = await isDataExists("Class", "id", Class_id);
+    const isClassIdValid = await isDataExists(
+      dbConnection,
+      "Class",
+      "id",
+      Class_id
+    );
     if (!isClassIdValid) {
       return callback({
         code: grpc.status.NOT_FOUND,
@@ -45,7 +65,12 @@ const AddNewLessonInTerm = async (call, callback) => {
       });
     }
 
-    const isTeacherIdValid = await isDataExists("Teacher", "id", Teacher_id);
+    const isTeacherIdValid = await isDataExists(
+      dbConnection,
+      "Teacher",
+      "id",
+      Teacher_id
+    );
     if (!isTeacherIdValid) {
       return callback({
         code: grpc.status.NOT_FOUND,
@@ -141,7 +166,12 @@ const AddNewLessonTermForStudent = async (call, callback) => {
     const { Lesson_in_term_id, Student_id } = call.request;
     await transactionConnection.beginTransaction();
 
-    const isStudentExists = await isDataExists("student", "id", Student_id);
+    const isStudentExists = await isDataExists(
+      transactionConnection,
+      "student",
+      "id",
+      Student_id
+    );
     if (!isStudentExists) {
       await transactionConnection.rollback();
       transactionConnection.release();
@@ -152,6 +182,7 @@ const AddNewLessonTermForStudent = async (call, callback) => {
     }
 
     const isLessonExists = await isDataExists(
+      transactionConnection,
       "lesson_in_term",
       "id",
       Lesson_in_term_id

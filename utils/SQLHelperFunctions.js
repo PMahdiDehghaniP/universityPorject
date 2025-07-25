@@ -1,7 +1,5 @@
-const { dbConnection } = require("../config/createConnectionToDB");
-
-const isDataExists = async (tableName, columnName, value) => {
-  const [result] = await dbConnection.query(
+const isDataExists = async (connection, tableName, columnName, value) => {
+  const [result] = await connection.query(
     `SELECT 1 FROM ${tableName} WHERE ${columnName}=? LIMIT 1`,
     [value]
   );
