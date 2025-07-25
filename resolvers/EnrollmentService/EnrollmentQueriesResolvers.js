@@ -1,5 +1,6 @@
 const { dbConnection } = require("../../config/createConnectionToDB");
 const grpc = require("@grpc/grpc-js");
+const { isDataExists } = require("../../utils/SQLHelperFunctions");
 
 const GetLessonsInTerm = async (call, callback) => {
   try {
@@ -59,7 +60,59 @@ const GetLessonsInTerm = async (call, callback) => {
     return callback({ code: grpc.status.INTERNAL, message: error });
   }
 };
+const GetStudentLessons = async (call, callback) => {
+  const GetStudentLessonsQuery = `
+SELECT student.firstname AS studentName , student.lastname AS studentLastname,lesson.name AS lessonName,
+lesson.number_of_units AS TedadVahed,lessonInterm.lesson_time AS lessonTime ,studentLessons.grade AS grade,
+studentLessons.status AS lessonStatus,teacher.name AS teacherName,teacher.lastname AS teacherLastname,
+college.name AS collegeName,term.year AS termYear , term.season AS termSeason
+FROM
+  student JOIN lesson_term_students AS studentLessons ON student.id=studentLessons.student_id
+  JOIN lesson_in_term AS lessonInterm ON lessonInterm.id=studentLessons.lesson_term_id
+  JOIN lesson ON lesson.id=lessonInterm.lesson_id
+  JOIN teacher ON teacher.id=lessonInterm.teacher_id
+  JOIN college ON college.id=lessonInterm.college_id
+  JOIN term ON term.id = lessonInterm.term_id
+WHERE student.id=?`;
+  try {
+    const { Student_id } = call.request;
+    const isStudentExists = await isDataExists(
+      dbConnection,
+      "student",
+      "id",
+      Student_id
+    );
+    if (!isStudentExists) {
+      return callback({
+        code: grpc.status.NOT_FOUND,
+        message: "Student Not Found!",
+      });
+    }
+    const [studentLessons] = await dbConnection.query(GetStudentLessonsQuery, [
+      Student_id,
+    ]);
 
+    return callback(null, {
+      Student_lessons: studentLessons.map((row) => ({
+        Student_name: row.studentName,
+        Student_lastname: row.studentLastname,
+        Lesson_name: row.lessonName,
+        TedadVahed: row.TedadVahed,
+        Lesson_time: row.lessonTime,
+        Grade: row.grade,
+        status: row.lessonStatus.toUpperCase(),
+        Teacher_name: row.teacherName,
+        Teacher_lastname: row.teacherLastname,
+        College_name: row.collegeName,
+        Term_year: row.termYear,
+        TermSeason: row.termSeason.toUpperCase(),
+      })),
+    });
+  } catch (error) {
+    return callback({ code: grpc.status.INTERNAL, message: error });
+  }
+};
 module.exports = {
   GetLessonsInTerm,
+  GetStudentLessons,
 };

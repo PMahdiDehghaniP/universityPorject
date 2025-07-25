@@ -6,8 +6,15 @@ service EnrollmentService {
     rpc AddNewLessonInTerm(AddNewLessonInTermRequest)returns (AddNewLessonInTermResonse);
     rpc AddNewLessonTermForStudent(AddNewLessonTermForStudentRequest) returns (AddNewLessonTermForStudentResponse);
     rpc GetLessonsInTerm(GetLessonsInTermRequest) returns (GetLessonsInTermResponse);
+    rpc GetStudentLessons(GetStudentLessonsRequest) returns (GetStudentLessonsResponse);
 }
 
+enum LessonStatus {
+PASSED=0;
+FAILED=1;
+DELETED=2;
+NOTCOMPLETED=3;
+}
 message AddNewLessonInTermRequest{
     string Term_id=1;
     string Lesson_id=2;
@@ -53,4 +60,24 @@ string Lesson_in_term_id=2;
 }
 message AddNewLessonTermForStudentResponse{
 string Message =2;
+}
+message GetStudentLessonsRequest {
+    string Student_id=1;
+}
+message GetStudentLessonsItem {
+    string Student_name=1;
+    string Student_lastname=2;
+    string Lesson_name=3;
+    int32 TedadVahed=4;
+    string Lesson_time=5;
+    int32 Grade=6;
+    LessonStatus status=7;
+    string Teacher_name=8;
+    string Teacher_lastname=9;
+    string College_name=10;
+    string Term_year=11;
+    Seasons TermSeason=12;
+}
+message GetStudentLessonsResponse{
+    repeated GetStudentLessonsItem Student_lessons=1;
 }
