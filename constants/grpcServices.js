@@ -6,6 +6,7 @@ const ClassServiceHanlders = require("../resolvers/ClassService");
 const LessonServiceHanlders = require("../resolvers/LessonService");
 const TeacherServiceHanlders = require("../resolvers/TeacherService");
 const TermServiceHandlers = require("../resolvers/TermService");
+const { EnrollmentServiceHandlers } = require("../resolvers/EnrollmentService");
 
 const GRPC_SERVICES = [
   {
@@ -43,6 +44,12 @@ const GRPC_SERVICES = [
     packageName: "Term",
     serviceName: "TermService",
     handler: TermServiceHandlers,
+  },
+  {
+    filePath: path.join(PROTO_FILES_DIR, "enrollment.proto"),
+    packageName: "Enrollment",
+    serviceName: "EnrollmentService",
+    handler: EnrollmentServiceHandlers,
   },
 ];
 
