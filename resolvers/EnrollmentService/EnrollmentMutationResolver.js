@@ -135,7 +135,107 @@ const AddNewLessonInTerm = async (call, callback) => {
     return callback({ code: grpc.status.INTERNAL, message: error });
   }
 };
+const AddNewLessonTermForStudent = async (call, callback) => {
+  const transactionConnection = await dbConnection.getConnection();
+  try {
+    const { Lesson_in_term_id, Student_id } = call.request;
+    await transactionConnection.beginTransaction();
+
+    const isStudentExists = await isDataExists("student", "id", Student_id);
+    if (!isStudentExists) {
+      await transactionConnection.rollback();
+      transactionConnection.release();
+      return callback({
+        code: grpc.status.NOT_FOUND,
+        message: "Student Doesnt Exists",
+      });
+    }
+
+    const isLessonExists = await isDataExists(
+      "lesson_in_term",
+      "id",
+      Lesson_in_term_id
+    );
+    if (!isLessonExists) {
+      await transactionConnection.rollback();
+      transactionConnection.release();
+      return callback({
+        code: grpc.status.NOT_FOUND,
+        message: "Lesson In Selected Term Doesnt Exists",
+      });
+    }
+
+    const [studentInfoRes] = await transactionConnection.query(
+      "SELECT college_id FROM student WHERE id=?",
+      [Student_id]
+    );
+
+    const [selectedLessonInfo] = await transactionConnection.query(
+      "SELECT college_id AS lessonCollegeId, lesson_time, empty_capacity AS lessonEmptyCapacity FROM lesson_in_term WHERE id=?",
+      [Lesson_in_term_id]
+    );
+
+    const { lessonCollegeId, lesson_time, lessonEmptyCapacity } =
+      selectedLessonInfo[0];
+    const studentCollegeId = studentInfoRes[0]?.college_id;
+
+    if (lessonCollegeId !== studentCollegeId) {
+      await transactionConnection.rollback();
+      transactionConnection.release();
+      return callback({
+        code: grpc.status.INVALID_ARGUMENT,
+        message: "Student CollegeId And Lesson CollegeId Is Incompatible",
+      });
+    }
+
+    if (lessonEmptyCapacity === 0) {
+      await transactionConnection.rollback();
+      transactionConnection.release();
+      return callback({
+        code: grpc.status.UNAVAILABLE,
+        message: "Class Is Full",
+      });
+    }
+    const [duplicateCheck] = await transactionConnection.query(
+      "SELECT 1 FROM lesson_term_students WHERE lesson_term_id = ? AND student_id = ?",
+      [Lesson_in_term_id, Student_id]
+    );
+    if (duplicateCheck.length > 0) {
+      await transactionConnection.rollback();
+      transactionConnection.release();
+      return callback({
+        code: grpc.status.ALREADY_EXISTS,
+        message: "Student Already Enrolled In This Lesson",
+      });
+    }
+
+    await transactionConnection.query(
+      "UPDATE lesson_in_term SET empty_capacity=? WHERE id=?",
+      [lessonEmptyCapacity - 1, Lesson_in_term_id]
+    );
+
+    await transactionConnection.query(
+      "INSERT INTO lesson_term_students (lesson_term_id, student_id, status, grade) VALUES (?, ?, ?, ?)",
+      [Lesson_in_term_id, Student_id, "notCompleted", 0]
+    );
+
+    await transactionConnection.commit();
+    transactionConnection.release();
+
+    return callback(null, {
+      Message: `Lesson SucessFully Added For Student With Id = ${Student_id}`,
+    });
+  } catch (error) {
+    await transactionConnection.rollback();
+    transactionConnection.release();
+    return callback({
+      code: grpc.status.INTERNAL,
+      message: error.message || "Internal error",
+    });
+  }
+};
 
 module.exports = {
   AddNewLessonInTerm,
+  AddNewLessonTermForStudent,
 };

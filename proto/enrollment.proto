@@ -4,6 +4,7 @@ package Enrollment;
 import "term.proto";
 service EnrollmentService {
     rpc AddNewLessonInTerm(AddNewLessonInTermRequest)returns (AddNewLessonInTermResonse);
+    rpc AddNewLessonTermForStudent(AddNewLessonTermForStudentRequest) returns (AddNewLessonTermForStudentResponse);
     rpc GetLessonsInTerm(GetLessonsInTermRequest) returns (GetLessonsInTermResponse);
 }
 
@@ -43,4 +44,13 @@ message GetLessonsInTermItem{
 }
 message GetLessonsInTermResponse{
 repeated GetLessonsInTermItem lessons=1 ;
+}
+
+message AddNewLessonTermForStudentRequest{
+string Student_id=1;
+string Lesson_in_term_id=2;
+
+}
+message AddNewLessonTermForStudentResponse{
+string Message =2;
 }
